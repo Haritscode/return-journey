@@ -4,5 +4,5 @@ class ErrorHandler extends Error{
         this.message=message;
         this.status=status;
     }
-}
+};
 module.exports=ErrorHandler;
