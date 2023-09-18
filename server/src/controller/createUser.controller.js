@@ -11,7 +11,7 @@ const createUser=async(req,res,next)=>{
             const user=new Users();
             const encrpthPass=bcrypt.hashSync(password,bcrypt.genSaltSync(10));
             const data=await user.createUser(firstName,lastName,countryCode+contact,email,encrpthPass,countryCode);
-            res.status(200).json(data);
+            res.status(200).json({id:data.id,contact:data.contact});
         }
     }
     catch(err){

@@ -1,11 +1,13 @@
-const otpdb = require("../models/otp.model");
 const bcrypt = require("bcryptjs");
+const Users=require("../repo/user.repo")
 const ErrorHandler = require("../config/ErrorHandler.config");
 const OTP = require("../repo/opt.repo");
 const verifyOpt = async (req, res, next) => {
   const { otp, contact } = req.body;
   const otpObj = new OTP();
-  const otpData = await otpObj.getOtpDetails(contact);
+  const user=new Users();
+  const userId=await user.getUserId(contact)
+  const otpData = await otpObj.getOtpDetails(userId);
   if (otpData?._id) {
     
     // to verify the opt entered is valid or not
@@ -26,7 +28,7 @@ const verifyOpt = async (req, res, next) => {
           if (Date.now() - second < 600000) {
           
             // otp verified
-            const result=await otpObj.removeVerifiedOtp(contact);
+            const result=await otpObj.removeVerifiedOtp(userId);
             if (result.deletedCount > 0 && result.acknowledged) {
               next();
             }
