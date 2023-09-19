@@ -6,6 +6,9 @@ const otpSchema=new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId, required:true, ref:"user",index:{unique:true}
     },
+    clientIp:{
+        type:String,request:true
+    }
 },{timestamps:true})
 otpSchema.index({updatedAt:1},{expireAfterSeconds:3600*24})
 module.exports=mongoose.model("otp",otpSchema);

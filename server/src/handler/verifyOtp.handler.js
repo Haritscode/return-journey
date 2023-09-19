@@ -6,14 +6,13 @@ const verifyOpt = async (req, res, next) => {
   const { otp, contact } = req.body;
   const otpObj = new OTP();
   const user=new Users();
-  const userId=await user.getUserId(contact)
-  const otpData = await otpObj.getOtpDetails(userId);
-  if (otpData?._id) {
-    
+  const userId=await user.getUserId(contact);
+  const ip=req.ip;
+  const otpData = await otpObj.getOtpDetails(userId.id);
+  if (otpData?._id && otpData?.clientIp===ip) {
     // to verify the opt entered is valid or not
     bcrypt.compare(otp, otpData.otp, async(err, success) => {
       if (err) {
-
         // if error occured
         next(new ErrorHandler());
       } else {
@@ -47,7 +46,11 @@ const verifyOpt = async (req, res, next) => {
         }
       }
     });
-  } else {
+  }
+  else if(otpData?._id && !otpData?.ip===ip){
+    res.status(401).json({msg:"Unauthorized Ip"})
+  } 
+  else{
     // no data exists
     next(new ErrorHandler("Invalid Otp", 404));
   }

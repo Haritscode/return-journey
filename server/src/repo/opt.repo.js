@@ -2,11 +2,10 @@ const otpdb=require("../models/otp.model")
 const bcrypt=require("bcryptjs");
 class OTP{
     // store the otp details
-    storeOtp(otp,userId){
+    saveOtp(otp,userId,ip){
         const hashOtp = bcrypt.hashSync(otp, bcrypt.genSaltSync());
-        return otpdb.findOneAndUpdate({userId},{otp:hashOtp},{upsert:true,new:true})
+        return otpdb.findOneAndUpdate({userId},{otp:hashOtp,clientIp:ip},{upsert:true,new:true})
     }
-
     // find contact in otp collection
     getOtpDetails(userId){
         return otpdb.findOne({userId});
