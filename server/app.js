@@ -14,6 +14,9 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(express.json());
+app.get("/",(req,res)=>{
+    res.status(200).json({msg:"server running",clientIp:req.ip})
+})
 app.use('/api/users',require("./src/routes/users.routes"));
 app.use(errorHandler);
 app.listen(port,()=>{
