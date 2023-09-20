@@ -1,3 +1,43 @@
+# My Node.js Application
+
+This is a Node.js application that has been Dockerized for easy deployment and development. It uses Docker Compose to manage container orchestration.
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed on your system:
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Getting Started
+
+1. Clone the repository:
+
+   ```shell
+   git clone https://github.com/yourusername/your-node-app.git
+   ```
+
+cd your-node-app
+
+create a .env file named .env.dev for development and .env.prod for production server
+
+**Note:**  please refer to .env.sample file and copy the variable name and add your personal account value
+
+
+## Run the application lacally
+
+docker-compose -f docker-compose.development.yml up
+
+## Stopping the Local Development Environment
+
+docker-compose -f docker-compose.development.yml down
+
+
+
+
+
+
+
 # API Route: `/api/users`
 
 This route is responsible for creating a new user.
